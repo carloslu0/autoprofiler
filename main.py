@@ -2,6 +2,7 @@ import streamlit as st
 import os
 import asyncio
 from httpx_oauth.clients.google import GoogleOAuth2
+from oauthlib.oauth2 import WebApplicationClient
 
 if __name__ == '__main__':
     client_id = st.secrets["GOOGLE_CLIENT_ID"]
@@ -9,8 +10,11 @@ if __name__ == '__main__':
     redirect_uri = st.secrets["REDIRECT_URI"]
 
     client = GoogleOAuth2(client_id, client_secret)
-    authorization_url = asyncio.run(
-        write_authorization_url(client=client, redirect_uri=redirect_uri)
+    oauth_client = WebApplicationClient(client_id)
+    authorization_url, _ = oauth_client.prepare_request_uri(
+        "https://accounts.google.com/o/oauth2/auth",
+        redirect_uri=redirect_uri,
+        scope=["openid", "email", "profile"],
     )
 
     if "token" not in st.session_state:

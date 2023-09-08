@@ -11,7 +11,7 @@ if __name__ == '__main__':
 
     client = GoogleOAuth2(client_id, client_secret)
     oauth_client = WebApplicationClient(client_id)
-    authorization_url, _ = oauth_client.prepare_request_uri(
+    authorization_url, _, _ = oauth_client.prepare_request_uri(
         "https://accounts.google.com/o/oauth2/auth",
         redirect_uri=redirect_uri,
         scope=["openid", "email", "profile"],

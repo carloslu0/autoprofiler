@@ -10,10 +10,10 @@ if __name__ == '__main__':
 
     client = GoogleOAuth2(client_id, client_secret)
 
-    authorization_url = client.get_authorization_url(
-        redirect_uri=redirect_uri,
-        scope=["openid", "email", "profile"],
-    )
+    authorization_url = asyncio.run(client.get_authorization_url(
+    redirect_uri=redirect_uri,
+    scope=["openid", "email", "profile"],
+    ))
 
     if "token" not in st.session_state:
         try:
